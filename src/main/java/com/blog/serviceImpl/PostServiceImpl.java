@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.blog.DTO.PostDTO;
 import com.blog.entity.Post;
+import com.blog.exception.ResourceNotFoundException;
 import com.blog.repository.PostRepository;
 import com.blog.service.PostService;
 
@@ -25,14 +26,14 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public PostDTO createPost(PostDTO postDTO) {
 		Post post = postDTOToPostEntity(postDTO);
-			
+
 		Post newPost = postRepository.save(post);
-		
+
 		return postEntityToPostDTO(newPost);
 	}
 
-	//convert PostDTO to Post entity
-	public Post postDTOToPostEntity(PostDTO postDTO) {	
+	// convert PostDTO to Post entity
+	public Post postDTOToPostEntity(PostDTO postDTO) {
 		Post post = new Post();
 		post.setTitle(postDTO.getTitle());
 		post.setDescription(postDTO.getDescription());
@@ -40,8 +41,7 @@ public class PostServiceImpl implements PostService {
 		return post;
 	}
 
-	
-	//convert Post Entity to PostDTO
+	// convert Post Entity to PostDTO
 	public PostDTO postEntityToPostDTO(Post newPost) {
 		PostDTO newPostDto = new PostDTO();
 		newPostDto.setId(newPost.getId());
@@ -54,8 +54,18 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<PostDTO> getAllPosts() {
 		List<Post> allPosts = postRepository.findAll();
-		List<PostDTO> allPostsDTO = allPosts.stream().map(post -> postEntityToPostDTO(post)).collect(Collectors.toList());
+		List<PostDTO> allPostsDTO = allPosts.stream().map(post -> postEntityToPostDTO(post))
+				.collect(Collectors.toList());
 		return allPostsDTO;
+	}
+
+	@Override
+	public PostDTO getPostById(Long postId) {
+
+		Post post = postRepository.findById(postId)
+				.orElseThrow(() -> new ResourceNotFoundException("Post", "Id", postId));
+
+		return postEntityToPostDTO(post);
 	}
 
 }

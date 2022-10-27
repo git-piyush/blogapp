@@ -9,8 +9,10 @@ import com.blog.DTO.PostDTO;
 @Service
 public interface PostService {
 
-	public PostDTO createPost(PostDTO postDto);
+	PostDTO createPost(PostDTO postDto);
 	
-	public List<PostDTO> getAllPosts();
+	List<PostDTO> getAllPosts();
+	
+	PostDTO getPostById(Long postId);
 	
 }
