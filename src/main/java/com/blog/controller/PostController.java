@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.DTO.PostDTO;
@@ -34,9 +35,10 @@ public class PostController {
 	}
 
 	@GetMapping("/post")
-	public List<PostDTO> createPost() {
+	public List<PostDTO> getAllPost(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+									@RequestParam(value="pageSize", defaultValue="5", required=false) int pageSize) {
 
-		return postService.getAllPosts();
+		return postService.getAllPosts(pageNo, pageSize);
 
 	}
 
