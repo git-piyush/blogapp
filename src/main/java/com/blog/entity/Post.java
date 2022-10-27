@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+@Data					//it's a Lombok annotation
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
