@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,22 +39,32 @@ public class PostController {
 		return postService.getAllPosts();
 
 	}
-	
+
 	@GetMapping("/post/{postId}")
 	public ResponseEntity<PostDTO> getPostByPostId(@PathVariable Long postId) {
 
 		PostDTO post = postService.getPostById(postId);
-		
+
 		return new ResponseEntity<PostDTO>(post, HttpStatus.OK);
 
 	}
-	
+
 	@PutMapping("/post/{postId}")
-	public ResponseEntity<PostDTO> updatePostByPostId(@RequestBody PostDTO postDTO, @PathVariable(name="postId") Long postId) {
+	public ResponseEntity<PostDTO> updatePostByPostId(@RequestBody PostDTO postDTO,
+			@PathVariable(name = "postId") Long postId) {
 
 		PostDTO post = postService.updatePostById(postDTO, postId);
-		
+
 		return new ResponseEntity<PostDTO>(post, HttpStatus.OK);
+
+	}
+
+	@DeleteMapping("/post/{postId}")
+	public ResponseEntity<String> updatePostByPostId(@PathVariable(name = "postId") Long postId) {
+
+		postService.deletePostById(postId);
+
+		return new ResponseEntity<String>("Post has been deleted successfully", HttpStatus.OK);
 
 	}
 
