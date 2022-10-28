@@ -1,5 +1,7 @@
 package com.blog.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,7 @@ public class PostController {
 	PostService postService;
 
 	@PostMapping("/post")
-	public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO) {
+	public ResponseEntity<PostDTO> createPost(@Valid @RequestBody PostDTO postDTO) {
 
 		PostDTO newPostDTO = postService.createPost(postDTO);
 
@@ -54,7 +56,7 @@ public class PostController {
 	}
 
 	@PutMapping("/post/{postId}")
-	public ResponseEntity<PostDTO> updatePostByPostId(@RequestBody PostDTO postDTO,
+	public ResponseEntity<PostDTO> updatePostByPostId(@Valid @RequestBody PostDTO postDTO,
 			@PathVariable(name = "postId") Long postId) {
 
 		PostDTO post = postService.updatePostById(postDTO, postId);
@@ -64,7 +66,7 @@ public class PostController {
 	}
 
 	@DeleteMapping("/post/{postId}")
-	public ResponseEntity<String> updatePostByPostId(@PathVariable(name = "postId") Long postId) {
+	public ResponseEntity<String> deletePostByPostId(@PathVariable(name = "postId") Long postId) {
 
 		postService.deletePostById(postId);
 
