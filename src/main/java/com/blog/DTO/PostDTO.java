@@ -2,9 +2,8 @@ package com.blog.DTO;
 
 import java.util.Set;
 
-import javax.validation.constraints.Size;
 
-import com.sun.istack.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 
@@ -13,15 +12,16 @@ public class PostDTO {
 	
 	private Long id;
 	
-	@NotNull
+	@javax.validation.constraints.NotEmpty
 	@Size(min = 2, message="Post title should be at least 2 charecters")
 	private String title;
 	
-	@NotNull
-	@Size(min=10, message="Description should be at least 10 Charecters")
+	@javax.validation.constraints.NotEmpty
+	@Size(min=10, message="Post Description should be at least 10 Charecters")
 	private String description;
 	
-	@NotNull
+	@javax.validation.constraints.NotEmpty
 	private String content;
+	
 	private Set<CommentDTO> comments; 
 }
