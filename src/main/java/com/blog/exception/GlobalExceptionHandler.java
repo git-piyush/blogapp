@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.blog.DTO.ErrorDetails;
 
 @ControllerAdvice
-public class GlobalExceptionHandler{
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
 	//handle specific exception
 	@ExceptionHandler(ResourceNotFoundException.class)
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler{
 		
 		return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-/*	
+	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -58,7 +58,8 @@ public class GlobalExceptionHandler{
 		
 		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 	}
-*/	
+	
+	/*
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception, WebRequest webRequest){
 		
@@ -71,7 +72,7 @@ public class GlobalExceptionHandler{
 		
 		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 	}
-	
+	*/
 	
 	
 }
