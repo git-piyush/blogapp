@@ -35,8 +35,18 @@ public class CommentController {
 	// get all the comments associated with any perticular Post
 	@GetMapping("/post/{postId}/comment")
 	public List<CommentDTO> getAllCommentsByPostId(@PathVariable(value = "postId") Long postId) {
+
 		return commentService.getAllCommentsByPostId(postId);
 
 	}
+	
+	@GetMapping("/post/{postId}/comment/{commentId}")
+	public ResponseEntity<CommentDTO> getCommentById(@PathVariable(value = "postId") Long postId, @PathVariable(value = "commentId") Long commentId) {
+
+		return new ResponseEntity<>(commentService.getCommentById(postId, commentId), HttpStatus.OK);
+
+	}
+	
+	
 
 }
