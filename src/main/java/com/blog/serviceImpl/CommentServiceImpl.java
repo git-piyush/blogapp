@@ -3,6 +3,7 @@ package com.blog.serviceImpl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	private PostRepository postRepository;
+	
+	@Autowired
+	private ModelMapper mapper;
 
 	@Override
 	public CommentDTO createComment(CommentDTO commentDTO, Long postId) {
@@ -41,21 +45,31 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	private CommentDTO commentEntityToCommentDTO(Comment comment) {
+		
+		CommentDTO commentDTO = mapper.map(comment, CommentDTO.class);
+		
+		/*
 		CommentDTO commentDTO = new CommentDTO();
 		commentDTO.setId(comment.getId());
 		commentDTO.setName(comment.getName());
 		commentDTO.setEmail(comment.getEmail());
 		commentDTO.setBody(comment.getBody());
+		*/
 		return commentDTO;
 
 	}
 
 	private Comment commentDTOToCommentEntity(CommentDTO commentDTO) {
+		
+		Comment comment = mapper.map(commentDTO, Comment.class);
+		
+		/*
 		Comment comment = new Comment();
 		comment.setId(commentDTO.getId());
 		comment.setName(commentDTO.getName());
 		comment.setEmail(commentDTO.getEmail());
 		comment.setBody(commentDTO.getBody());
+		*/
 		return comment;
 
 	}

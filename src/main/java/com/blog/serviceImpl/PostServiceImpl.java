@@ -3,6 +3,7 @@ package com.blog.serviceImpl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,11 +22,14 @@ import com.blog.service.PostService;
 public class PostServiceImpl implements PostService {
 
 	PostRepository postRepository;
+	
+	private ModelMapper mapper;
 
 	@Autowired
-	public PostServiceImpl(PostRepository postRepository) {
+	public PostServiceImpl(PostRepository postRepository, ModelMapper mapper) {
 		super();
 		this.postRepository = postRepository;
+		this.mapper = mapper;
 	}
 
 	@Override
@@ -39,21 +43,31 @@ public class PostServiceImpl implements PostService {
 
 	// convert PostDTO to Post entity
 	public Post postDTOToPostEntity(PostDTO postDTO) {
+		
+		Post post = mapper.map(postDTO, Post.class);
+		
+		/* 
 		Post post = new Post();
 		post.setTitle(postDTO.getTitle());
 		post.setDescription(postDTO.getDescription());
-		post.setContent(postDTO.getContent());
+		post.setContent(postDTO.getContent()); 
+		*/
 		return post;
 	}
 
 	// convert Post Entity to PostDTO
 	public PostDTO postEntityToPostDTO(Post newPost) {
-		PostDTO newPostDto = new PostDTO();
-		newPostDto.setId(newPost.getId());
-		newPostDto.setTitle(newPost.getTitle());
-		newPostDto.setDescription(newPost.getDescription());
-		newPostDto.setContent(newPost.getContent());
-		return newPostDto;
+		
+		PostDTO postDTO = mapper.map(newPost, PostDTO.class);
+		
+		/*
+		PostDTO postDTO = new PostDTO();
+		postDTO.setId(newPost.getId());
+		postDTO.setTitle(newPost.getTitle());
+		postDTO.setDescription(newPost.getDescription());
+		postDTO.setContent(newPost.getContent());
+		*/
+		return postDTO;
 	}
 
 	@Override
