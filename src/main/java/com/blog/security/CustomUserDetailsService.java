@@ -19,8 +19,14 @@ import com.blog.repository.UserRepository;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-	@Autowired
+	
 	private UserRepository userRepository;
+	
+	@Autowired
+	public CustomUserDetailsService(UserRepository userRepository) {
+		super();
+		this.userRepository = userRepository;
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
